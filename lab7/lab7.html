@@ -1,33 +1,45 @@
 <html>
 <head>
+<meta charset="utf-8">
 <title>Chapter 10</title>
 <link rel="stylesheet" href="lab7.css">
-<script>
-</script>      
-</head>    
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.0.min.js"></script>
+</head>
 <body class="tiled">
 <header>
     <h1>Art Filters</h1>
 </header>
 <main>
     <div id="sliderBox">
-        <form>
+        <form id = "formObject">
            <label>Opacity: </label><p><input type="range" id="sliderOpacity" min="0" max="100" value="100" class="sliders" /> <span id="numOpacity">100</span>%</p>
-           <p><label>Saturation: </label><input type="range" id="sliderSaturation" min="1" max="300" value="100" class="sliders"/> <span id="numSaturation">100</span>%</p>
+           <p><label>Saturation: </label><input type="range" id="sliderSaturation" min="0" max="300" value="100" class="sliders"/> <span id="numSaturation">100</span>%</p>
            <p><label>Brightness: </label><input type="range" id="sliderBrightness" min="0" max="300" value="100" class="sliders" /> <span id="numBrightness">100</span>%</p>
            <p><label>Hue Rotate: </label><input type="range" id="sliderHue" min="0" max="360" value="0" class="sliders" /> <span id="numHue">0</span>deg</p>
            <p><label>Grayscale: </label><input type="range" id="sliderGray" min="0" max="100" value="0" class="sliders"/> <span id="numGray">0</span>%</p>
            <p><label>Blur: </label><input type="range" id="sliderBlur" min="0" max="10" value="0" class="sliders" /> <span id="numBlur">0</span>px</p>
            <p><button id="resetFilters">Reset</button> </p>
-        </form>    
+        </form>
     </div>
     <figure id="imgManipulated">
-        <img src="images/medium/painting1.jpg" > 
+        <div class = "opacityClass">
+            <div class = "saturateClass">
+                <div class = "brightnessClass">
+                    <div class="hueRotateClass">
+                        <div class="grayScaleClass">
+                            <div class="blurClass">
+                                <img src="images/medium/painting1.jpg" >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <figcaption>
             <em>Still Life with Flowers in a Glass Vase</em> <br>
             Jan Davidsz. de Heem, 1650 - 1683
         </figcaption>
-    </figure>   
+    </figure>
     <div id="thumbBox">
         <div><img src="images/small/painting1.jpg"  alt="Still Life with Flowers in a Glass Vase" title="Jan Davidsz. de Heem, 1650 - 1683"/></div>
         <div><img src="images/small/painting2.jpg"  alt="Portrait of Alida Christina Assink" title="Jan Adam Kruseman, 1833"/></div>
@@ -37,7 +49,160 @@
     </div>
 </main>
 <script>
+    $(document).ready(function(){
 
-</script>    
-</body>   
+
+        $("#thumbBox div img").on("click",function(){
+            let srcOfImgClicked = $(this).attr("src");
+            let toChangeHeadLine = $(this).attr("alt");
+            let toChangeBelowHead = $(this).attr("title");
+
+            let toChangeSrc = srcOfImgClicked.replace("small","medium");
+
+            $("#imgManipulated img").attr("src",toChangeSrc);
+            $("#imgManipulated figcaption").remove();
+
+            let newFigCaption = "<figcaption>" + "<em>" + toChangeHeadLine + "</em>" + "<br>" + toChangeBelowHead +"</figcaption>";
+            console.log(newFigCaption);
+            let newFigCaptionObject = $(newFigCaption);
+            console.log(typeof newFigCaptionObject);
+            console.log(newFigCaptionObject);
+
+            $("#imgManipulated").append(newFigCaptionObject);
+        });
+
+
+
+        /*Code for changing opacity*/
+
+        $("#sliderOpacity").on("input change", function() {
+
+
+            $(this).siblings("span").html($(this).val()) ;
+
+            let val = $(this).val();
+            val = (Number(val))/(100);
+
+            let valInsideOpacity = "opacity(" + val + ")";
+
+            $(".opacityClass").css("filter",valInsideOpacity);
+            $(".opacityClass").css("-webkit-filter",valInsideOpacity);
+
+        });
+
+
+        /*Code for changing Saturation*/
+
+        $("#sliderSaturation").on("input change", function() {
+            $(this).siblings("span").html($(this).val()) ;
+
+            let val = $(this).val();
+            val = (Number(val))/(100);
+            let valInsideOpacity = "saturate(" + val + ")";
+            $(".saturateClass").css("filter",valInsideOpacity);
+            $(".saturateClass").css("-webkit-filter",valInsideOpacity);
+        });
+
+
+        /*Code for changing Brightness*/
+
+        $("#sliderBrightness").on("input change", function() {
+            $(this).siblings("span").html($(this).val()) ;
+
+            let val = $(this).val();
+            val = (Number(val))/(100);
+            let valInsideOpacity = "brightness(" + val + ")";
+            $(".brightnessClass").css("filter",valInsideOpacity);
+            $(".brightnessClass").css("-webkit-filter",valInsideOpacity);
+
+        });
+
+
+        /*Code for changing Hue*/
+
+        $("#sliderHue").on("input change", function() {
+            $(this).siblings("span").html($(this).val()) ;
+
+            let val = $(this).val() + "deg";
+            console.log(val);
+
+            let valInsideOpacity = "hue-rotate(" + val + ")";
+            $(".hueRotateClass").css("filter",valInsideOpacity);
+            $(".hueRotateClass").css("-webkit-filter",valInsideOpacity);
+        });
+
+
+        /*Code for changing Gray*/
+
+        $("#sliderGray").on("input change", function() {
+            $(this).siblings("span").html($(this).val()) ;
+
+            let val = $(this).val();
+            val = (Number(val))/(100);
+
+            let valInsideOpacity = "grayscale(" + val + ")";
+            $(".grayScaleClass").css("filter",valInsideOpacity);
+            $(".grayScaleClass").css("-webkit-filter",valInsideOpacity);
+        });
+
+        /*Code for changing Blur*/
+
+        $("#sliderBlur").on("input change", function() {
+            $(this).siblings("span").html($(this).val()) ;
+
+            let val = $(this).val()+"px";
+
+
+            let valInsideOpacity =  "blur(" + val + ")";
+            $(".blurClass").css("filter",valInsideOpacity);
+            $(".blurClass").css("-webkit-filter",valInsideOpacity);
+        });
+
+        /* Code for reset */
+
+        $("#resetFilters").on("click",function(){
+            event.preventDefault();
+            console.log($("#imgManipulated img").css("filter"));
+            $("#formObject").get(0).reset();
+
+
+            $("#imgManipulated img").css("filter","none");
+            $("#imgManipulated img").css("-webkit-filter","none");
+
+            $("#sliderOpacity").siblings("span").html("100") ;
+            $("#sliderSaturation").siblings("span").html("100") ;
+            $("#sliderBrightness").siblings("span").html("100") ;
+            $("#sliderHue").siblings("span").html("0") ;
+            $("#sliderGray").siblings("span").html("0") ;
+            $("#sliderBlur").siblings("span").html("0") ;
+
+            $(".opacityClass").css("filter","none");
+            $(".opacityClass").css("-webkit-filter","none");
+
+            $(".brightnessClass").css("filter","none");
+            $(".brightnessClass").css("-webkit-filter","none");
+
+            $(".saturateClass").css("filter","none");
+            $(".saturateClass").css("-webkit-filter","none");
+
+            $(".hueRotateClass").css("filter","none");
+            $(".hueRotateClass").css("-webkit-filter","none");
+
+            $(".grayScaleClass").css("filter","none");
+            $(".grayScaleClass").css("-webkit-filter","none");
+
+            $(".blurClass").css("filter","none");
+            $(".blurClass").css("-webkit-filter","none");
+
+        });
+
+
+
+    });
+
+
+
+
+</script>
+</body>
 </html>
