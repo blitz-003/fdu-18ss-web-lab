@@ -18,8 +18,8 @@ include 'travel-data.inc.php';
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 
     <link rel="stylesheet" href="css/bootstrap.min.css" />
-    
-    
+
+
     <link rel="stylesheet" href="css/bootstrap-theme.css" />
     <link rel="stylesheet" href="css/captions.css" />
 
@@ -27,65 +27,74 @@ include 'travel-data.inc.php';
 
 <body>
     <?php include 'header.inc.php'; ?>
-    
+
 
 
     <!-- Page Content -->
     <main class="container">
-     
-        
+
+
         <div class="btn-group countryButtons" role="group" aria-label="...">
               <a role="button" class="btn btn-default" href="list.php">All</a>
-           
-              <?php   
+
+              <?php
               /* you will need to fill this place with appropriate PHP */
               /* hint: use array and loop */
               //the next line is an example
-              //<a href="list.php?country=Canada" role="button" class="btn btn-default"> Canada</a> 
-
+              //<a href="list.php?country=Canada" role="button" class="btn btn-default"> Canada</a>
+              sort($countries);
+              foreach($countries as $value){
+                      echo "<a href=\"list.php?country=$value\" role=\"button\" class=\"btn btn-default\"> $value</a>";
+              }
 
               ?>
-                     
-        </div>               
-           
-        
+
+        </div>
+
+
 
 		<ul class="caption-style-2">
-         
-          <?php   
-          /* you will need to fill this place with appropriate PHP */ 
+
+          <?php
+          /* you will need to fill this place with appropriate PHP */
           /* hint: use array and loop */
           //the next lines are one of the elements
           //you need to fill the elements with data provided
 
 
-   //        <li>
-   //              <a href="detail.php?id=22" class="img-responsive">
-   //              	<img src="images/square/6114850721.jpg" alt="View of Cologne">
-   //              	<div class="caption">
-   //              		<div class="blur">
-   //              		</div>
-   //              		<div class="caption-text">
-   //              			<h1>View of Cologne</h1>
-   //              		</div>
-   //              	</div>
-   //              </a>
-			// </li>
+             foreach($images as $id => $array_value){
+                     $path = $array_value["path"];
+                     $description = $array_value["description"];
+                     echo "<li>
+                           <a href=\"detail.php?id=$id\" class=\"img-responsive\">
+                           	<img src=\"images/square/$path\" alt=\"$description\">
+                           	<div class=\"caption\">
+                           		<div class=\"blur\">
+                           		</div>
+                           		<div class=\"caption-text\">
+                           			<h1>$description</h1>
+                           		</div>
+                           	</div>
+                           </a>
+          	   </li>";
+
+             }
+
           ?>
 
-       </ul>       
+       </ul>
 
-      
+
     </main>
-    
+
     <footer>
         <div class="container-fluid">
                     <div class="row final">
                 <p>Copyright &copy; 2017 Creative Commons ShareAlike</p>
                 <p><a href="#">Home</a> / <a href="#">About</a> / <a href="#">Contact</a> / <a href="#">Browse</a></p>
-            </div>            
+            </div>
         </div>
-        
+
 
     </footer>
 
